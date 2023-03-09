@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+#from django.urls import include
 from django.conf.urls.static import static
 from django.conf import settings
 from front import views
@@ -27,6 +28,7 @@ urlpatterns = [
     path('detail', views.detail, name='detail'),
     path('checkout', views.checkout, name='checkout'),
     path('contact', views.contact, name='contact'),
+    #path('', include('admin_volt.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
