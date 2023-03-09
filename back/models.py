@@ -6,6 +6,10 @@ class Product(models.Model):
     price = models.FloatField(null=False, blank=False)
     description = models.TextField(max_length=255, null=True, blank=True)
     details = models.TextField(max_length=255, null=True, blank=True)
+    stock = models.IntegerField(default=1, null=True, blank=True)
+    active = models.BooleanField(default=True, null=False, blank=True)
+    likes = models.IntegerField(default=0, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=False, blank=True)
     
     class Meta:
         ordering = ['name']
