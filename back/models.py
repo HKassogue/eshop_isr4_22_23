@@ -7,3 +7,8 @@ class Product(models.Model):
     description = models.TextField(max_length=255, null=True, blank=True)
     details = models.TextField(max_length=255, null=True, blank=True)
     
+    class Meta:
+        ordering = ['name']
+	
+    def __str__(self):
+        return f"{self.id} : {self.name}"
