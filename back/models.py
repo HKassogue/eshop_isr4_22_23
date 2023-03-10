@@ -45,21 +45,21 @@ class Image(models.Model):
         return f"{self.name} de {self.product.name}"
     
 
-class Order(models.Model):
-    reference = models.CharField(max_length=30, null=False, blank=False, unique=True)
-    created_at = models.DateTimeField(null=False, blank=False, auto_now=True)
-    completed = models.BooleanField(default=False, null=True, blank=False)
-    products = models.ManyToManyField('Product', through='Order_details', related_name='orders')
+# class Order(models.Model):
+#     reference = models.CharField(max_length=30, null=False, blank=False, unique=True)
+#     created_at = models.DateTimeField(null=False, blank=False, auto_now=True)
+#     completed = models.BooleanField(default=False, null=True, blank=False)
+#     products = models.ManyToManyField('Product', through='Order_details', related_name='orders')
     
-    class Meta:
-        ordering = ["-created_at", "reference"]
+#     class Meta:
+#         ordering = ["-created_at", "reference"]
     
-    def __str__(self):
-        return f"{self.reference}"
+#     def __str__(self):
+#         return f"{self.reference}"
     
 
-class Order_details(models.Model):
-    order = models.ForeignKey('Order', null=True, blank=False, on_delete=models.SET_NULL)
-    product = models.ForeignKey('Product', null=True, blank=False, on_delete=models.SET_NULL)
-    quantity = models.SmallIntegerField(default=1, null=True, blank=False)
-    price = models.FloatField(default=1, null=True, blank=False)
+# class Order_details(models.Model):
+#     order = models.ForeignKey('Order', null=True, blank=False, on_delete=models.SET_NULL)
+#     product = models.ForeignKey('Product', null=True, blank=False, on_delete=models.SET_NULL)
+#     quantity = models.SmallIntegerField(default=1, null=True, blank=False)
+#     price = models.FloatField(default=1, null=True, blank=False)
