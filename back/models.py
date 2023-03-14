@@ -45,21 +45,56 @@ class Image(models.Model):
         return f"{self.name} de {self.product.name}"
     
 
-# class Order(models.Model):
-#     reference = models.CharField(max_length=30, null=False, blank=False, unique=True)
-#     created_at = models.DateTimeField(null=False, blank=False, auto_now=True)
-#     completed = models.BooleanField(default=False, null=True, blank=False)
-#     products = models.ManyToManyField('Product', through='Order_details', related_name='orders')
-    
-#     class Meta:
-#         ordering = ["-created_at", "reference"]
-    
-#     def __str__(self):
-#         return f"{self.reference}"
+class Order(models.Model):
+    reference = models.CharField(max_length=30, null=False, blank=False, unique=True)
+    created_at = models.DateTimeField(null=False, blank=False, auto_now_add=True)
+    completed = models.BooleanField(default=False, null=True, blank=False)
+    products = models.ManyToManyField("Product", through="Order_details", related_name="orders")
+
+    class Meta:
+        ordering = ["-created_at", "reference"]
+
+    def __str__(self):
+        return f"{self.reference}"
     
 
-# class Order_details(models.Model):
-#     order = models.ForeignKey('Order', null=True, blank=False, on_delete=models.SET_NULL)
-#     product = models.ForeignKey('Product', null=True, blank=False, on_delete=models.SET_NULL)
-#     quantity = models.SmallIntegerField(default=1, null=True, blank=False)
-#     price = models.FloatField(default=1, null=True, blank=False)
+class Order_details(models.Model):
+    order = models.ForeignKey('Order', null=True, blank=False, on_delete=models.SET_NULL)
+    product = models.ForeignKey('Product', null=True, blank=False, on_delete=models.SET_NULL)
+    quantity = models.SmallIntegerField(default=1, null=True, blank=False)
+    price = models.FloatField(default=1, null=True, blank=False)
+
+    class Meta:
+        verbose_name = "Order details"
+        verbose_name_plural = "Orders details"
+
+
+class Arrival(models.Model):
+    created_at = models.DateTimeField(null=False, blank=False, auto_now_add=True)
+    closed_at = models.DateTimeField(null=True, blank=True, default=False)
+    closed = models.BooleanField(default=False, null=True, blank=True)
+    products = models.ManyToManyField("Product", through="Arrival_details", related_name="arrivals")
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.id}"
+    
+
+class Arrival_details(models.Model):
+    arrival = models.ForeignKey('Arrival', null=True, blank=False, on_delete=models.SET_NULL)
+    product = models.ForeignKey('Product', null=True, blank=False, on_delete=models.SET_NULL)
+    quantity = models.SmallIntegerField(default=1, null=True, blank=False)
+
+    class Meta:
+        verbose_name = "Arrival details"
+        verbose_name_plural = "Arrivals details"
+
+
+class Payment(models.Model):
+    reference = models.CharField(max_length=30, null=False, blank=False, unique=True)
+    order = models.OneToOneField("Order", null=True, blank=False, on_delete=models.PROTECT, related_name="payment")
+    payed_at = models.DateTimeField(null=False, blank=False, auto_now_add=True)
+    mode = models.CharField(max_length=30, null=False, blank=False, default="CASH")
+    details = models.TextField(max_length=255, null=True, blank=True)
