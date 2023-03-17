@@ -133,7 +133,7 @@ class Review(models.Model):
 class Like(models.Model):
     email = models.CharField(max_length=30, null=False, blank=False)
     liked = models.BooleanField(default=True, null=False, blank=False)
-    product = models.ForeignKey('Product', null=False, blank=False, on_delete=models.CASCADE)
+    product = models.ForeignKey('Product', null=False, blank=False, on_delete=models.CASCADE, related_name='likes')
     created_at = models.DateTimeField(null=False, blank=False, auto_now_add=True)
 
     class Meta:
