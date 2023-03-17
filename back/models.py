@@ -35,6 +35,17 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.id} : {self.name}"
     
+    @property
+    def promo_price(self):
+        return self.price + self.price * 0.09
+    
+    @property
+    def first_image(self):
+        if self.images.all():
+            return self.images.all()[0].file.url
+        else:
+            return ''
+    
 
 class Image(models.Model):
     name = models.CharField(max_length=30, null=False, blank=False)
