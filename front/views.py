@@ -6,10 +6,10 @@ from myauth.models import *
 
 def home(request):
     #return HttpResponse("<h1>Bienvenu sur notre site!</h1>")
-    categories = Category.objects.filter(active=True).order_by('name') 
+    #categories = Category.objects.filter(active=True).order_by('name') 
     products = Product.objects.filter(active=True).order_by('name')[:12]
     context = {
-        'categories': categories,
+        #'categories': categories,
         'products': products
     }
     return render(request, 'front/index.html', context)
